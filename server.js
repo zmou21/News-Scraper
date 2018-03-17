@@ -62,7 +62,7 @@
         }
         else{
 
-          console.log(`Title: ${title} \n Link: ${link} \n Summary: ${summary} \n Image: ${image}`);
+          //console.log(`Title: ${title} \n Link: ${link} \n Summary: ${summary} \n Image: ${image}`);
 
             db.Article.create({
               title: title,
@@ -72,7 +72,6 @@
               saved: saved
             })
             .then(function(dbArticle) {
-              // View the added result in the console
               console.log(dbArticle);
             })
             .catch(function(err) {
@@ -80,8 +79,6 @@
               return res.json(err);
             });
           }
-
-
       });
 
       res.send("Scrape Complete");
@@ -93,7 +90,6 @@
 
   // Route for getting all Articles from the db
   app.get("/articles", function(req, res) {
-    // TODO: Finish the route so it grabs all of the articles
     db.Article.find({})
     .then(function(data) {
       res.json(data)
@@ -106,9 +102,7 @@
   //Route to save articles to save page
   app.put("/articles", function(req, res) {
     // console.log("--------------------");
-    // var parsed = JSON.parse(req.params.id);
-    // console.log(parsed);
-    console.log(req.body._id);
+    //console.log(req.body._id);
     db.Article.findOneAndUpdate({_id: req.body._id }, { $set: { saved: req.body.saved } })
     .then(function(save) {
       res.json(save);
@@ -121,7 +115,6 @@
 
   //Route to get saved articles for save page
   app.get("/saved", function(req, res) {
-    // TODO: Finish the route so it grabs all of the articles
     db.Article.find({ saved: true })
     .then(function(data) {
       res.json(data)
@@ -132,23 +125,34 @@
   });
 
 
-  //
-  // // Route for grabbing a specific Article by id, populate it with it's note
-  // app.get("/articles/:id", function(req, res) {
-  //   // TODO
-  //   // ====
-  //   // Finish the route so it finds one article using the req.params.id,
-  //   // and run the populate method with "note"  ,
-  //   // then responds with the article with the note included
-  //   db.Article.findOne({_id: req.params.id})
-  //   .populate("note")
-  //   .then(function(data) {
-  //     res.json(data)
-  //   })
-  //   .catch(function(err) {
-  //     res.json(err)
-  //   })
-  // });
+  // Route for grabbing a specific Article by id, populate it with it's note
+  app.get("/notes/:id", function(req, res) {
+    db.Article.findOne({_id: req.body.id})
+    .populate("comment")
+    .then(function(data) {
+      res.json(data)
+    })
+    .catch(function(err) {
+      res.json(err)
+    })
+  });
+
+  app.post("/notes", function(req, res) {
+    db.Article.findOne({_id: req.body.id})
+    .populate("comment")
+    .then(function(data) {
+      res.json(data)
+      console.log("complete");
+    })
+    .catch(function(err) {
+      res.json(err)
+    })
+  });
+
+  app.delete("/notes/:id", function(req, res) {
+  //delete
+  })
+
   //
   // // Route for saving/updating an Article's associated Note
   // app.post("/articles/:id", function(req, res) {
