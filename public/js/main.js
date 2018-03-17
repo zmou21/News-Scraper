@@ -48,7 +48,7 @@
           "<div class='panel panel-default'>",
           "<div class='panel-heading'>",
           "<h3>",
-          "<a class='article-link' target='_blank' href='" + article.link + "'>",
+          "<a class='article-link' target='_blank' href='https://www.marketwatch.com/" + article.link + "'>",
           article.title,
           "</a>",
           "<a class='btn btn-success save'>",
