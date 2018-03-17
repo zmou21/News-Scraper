@@ -55,6 +55,8 @@
 
         let image = $(element).find("img").attr("src");
 
+        let saved = false;
+
         if(image === undefined) {
           console.log("not printing");
         }
@@ -66,7 +68,8 @@
               title: title,
               link: link,
               image: image,
-              summary: summary
+              summary: summary,
+              saved: saved
             })
             .then(function(dbArticle) {
               // View the added result in the console
@@ -99,6 +102,36 @@
       res.json(err)
     })
   });
+
+  //Route to save articles to save page
+  app.put("/articles", function(req, res) {
+    // console.log("--------------------");
+    // var parsed = JSON.parse(req.params.id);
+    // console.log(parsed);
+    console.log(req.body._id);
+    db.Article.findOneAndUpdate({_id: req.body._id }, { $set: { saved: req.body.saved } })
+    .then(function(save) {
+      res.json(save);
+    })
+    .catch(function(error) {
+      res.json(error);
+    })
+  });
+
+
+  //Route to get saved articles for save page
+  app.get("/saved", function(req, res) {
+    // TODO: Finish the route so it grabs all of the articles
+    db.Article.find({ saved: true })
+    .then(function(data) {
+      res.json(data)
+    })
+    .catch(function(err) {
+      res.json(err)
+    })
+  });
+
+
   //
   // // Route for grabbing a specific Article by id, populate it with it's note
   // app.get("/articles/:id", function(req, res) {
