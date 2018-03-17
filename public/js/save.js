@@ -135,7 +135,7 @@ $(document).ready(function() {
     // Using a delete method here just to be semantic since we are deleting an article/headline
     $.ajax({
       method: "DELETE",
-      url: "/api/headlines/" + articleToDelete._id
+      url: "/notes/" + articleToDelete._id
     }).then(function(data) {
       // If this works out, run initPage again which will rerender our list of saved articles
       if (data.ok) {
@@ -149,7 +149,7 @@ $(document).ready(function() {
     // We grab the id of the article to get notes for from the panel element the delete button sits inside
     var currentArticle = $(this).parents(".panel").data();
     // Grab any notes with this headline/article id
-    $.get("/api/notes/" + currentArticle._id).then(function(data) {
+    $.get("/notes/" + currentArticle._id).then(function(data) {
       // Constructing our initial HTML to add to the notes modal
       var modalText = [
         "<div class='container-fluid text-center'>",
@@ -193,7 +193,7 @@ $(document).ready(function() {
         _id: $(this).data("article")._id,
         noteText: newNote
       };
-      $.post("/api/notes", noteData).then(function() {
+      $.post("/notes", noteData).then(function() {
         // When complete, close the modal
         bootbox.hideAll();
       });
@@ -212,6 +212,7 @@ $(document).ready(function() {
     }).then(function() {
       // When done, hide the modal
       bootbox.hideAll();
+      console.log("complete on front end");
     });
   }
 });
