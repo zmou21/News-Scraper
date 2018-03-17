@@ -97,11 +97,13 @@
       // When we rendered the article initially, we attatched a javascript object containing the headline id
       // to the element using the .data method. Here we retrieve that.
       var articleToSave = $(this).parents(".panel").data();
+      // console.log("--------------------"); JSON.stringify(articleToSave)
+      // console.log(articleToSave);
       articleToSave.saved = true;
       // Using a patch method to be semantic since this is an update to an existing record in our collection
       $.ajax({
         method: "PUT",
-        url: "/api/headlines",
+        url: "/articles",
         data: articleToSave
       }).then(function(data) {
         // If successful, mongoose will send back an object containing a key of "ok" with the value of 1
