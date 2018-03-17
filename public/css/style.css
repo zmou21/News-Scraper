@@ -5,7 +5,7 @@
 
   body {
     margin-bottom: 80px;
-    background-image: url("../images/paper.png");
+    background-image: url("/images/paper.png");
   }
 
   .footer {
@@ -43,7 +43,7 @@
 
   .jumbotron .background-image {
     height: 100%;
-    background-image: url("../images/newspaper.jpg");
+    background-image: url("/images/newspaper.jpeg");
     background-size: cover;
   }
 
@@ -155,4 +155,9 @@
   .note.list-group-item .btn {
     position: relative;
     bottom: 10px;
+  }
+
+  .image {
+    margin-right: 1%;
+    border-radius: 3px;
   }
