@@ -4,7 +4,7 @@
   "description": "web app that scrapes news and allows for users to comment",
   "main": "index.js",
   "scripts": {
-    "start": "server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
