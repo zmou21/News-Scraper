@@ -15,7 +15,7 @@ $(document).ready(function() {
   function initPage() {
     // Empty the article container, run an AJAX request for any saved headlines
     articleContainer.empty();
-    $.get("/api/headlines?saved=true").then(function(data) {
+    $.get("/saved").then(function(data) {
       // If we have headlines, render them to the page
       if (data && data.length) {
         renderArticles(data);
@@ -50,8 +50,8 @@ $(document).ready(function() {
         "<div class='panel panel-default'>",
         "<div class='panel-heading'>",
         "<h3>",
-        "<a class='article-link' target='_blank' href='" + article.url + "'>",
-        article.headline,
+        "<a class='article-link' target='_blank' href='" + article.link + "'>",
+        article.title,
         "</a>",
         "<a class='btn btn-danger delete'>",
         "Delete From Saved",
@@ -60,6 +60,7 @@ $(document).ready(function() {
         "</h3>",
         "</div>",
         "<div class='panel-body'>",
+        "<img class='image' src='"+ article.image +"'>",
         article.summary,
         "</div>",
         "</div>"
