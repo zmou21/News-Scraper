@@ -50,7 +50,7 @@ $(document).ready(function() {
         "<div class='panel panel-default'>",
         "<div class='panel-heading'>",
         "<h3>",
-        "<a class='article-link' target='_blank' href='" + article.link + "'>",
+        "<a class='article-link' target='_blank' href='https://www.marketwatch.com/" + article.link + "'>",
         article.title,
         "</a>",
         "<a class='btn btn-danger delete'>",
@@ -132,10 +132,11 @@ $(document).ready(function() {
     // This function handles deleting articles/headlines
     // We grab the id of the article to delete from the panel element the delete button sits inside
     var articleToDelete = $(this).parents(".panel").data();
+    articleToDelete.saved = false;
     // Using a delete method here just to be semantic since we are deleting an article/headline
     $.ajax({
       method: "DELETE",
-      url: "/notes/" + articleToDelete._id
+      url: "/delete/" + articleToDelete._id
     }).then(function(data) {
       // If this works out, run initPage again which will rerender our list of saved articles
       if (data.ok) {
