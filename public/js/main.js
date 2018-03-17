@@ -57,6 +57,7 @@
           "</h3>",
           "</div>",
           "<div class='panel-body'>",
+          "<img class='image' src='"+ article.image +"'>",
           article.summary,
           "</div>",
           "</div>"
