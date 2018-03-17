@@ -13,7 +13,7 @@
   // Require all models
   const db = require("./models");
 
-  const PORT = 3000;
+  const port = process.env.PORT || 3000;
 
   // Initialize Express
   const app = express();
@@ -149,32 +149,40 @@
     })
   });
 
-  app.delete("/notes/:id", function(req, res) {
-  //delete
+  //deleting functionality
+  app.delete("/delete/:id", function(req, res) {
+    console.log(req.body);
+    db.Article.findOneAndUpdate({_id: req.body._id }, { $set: { saved: req.body.saved } })
+    .then(function(data) {
+      res.json(data)
+      console.log("complete");
+    })
+    .catch(function(err) {
+      res.json(err)
+    })
   })
 
-  //
-  // // Route for saving/updating an Article's associated Note
-  // app.post("/articles/:id", function(req, res) {
-  //   // TODO
-  //   // ====
-  //   // save the new note that gets posted to the Notes collection
-  //   // then find an article from the req.params.id
-  //   // and update it's "note" property with the _id of the new note
-  //   db.Note.create(req.body)
-  //   .then(function(dataNote) {
-  //
-  //     return db.Article.findOneAndUpdate({_id: req.params.id}, { $push: { notes: dataNote._id } }, { new: true });
-  //   })
-  //   .then(function(data) {
-  //     res.json(data)
-  //   })
-  //   .catch(function(err) {
-  //     res.json(err)
-  //   })
-  // });
+  // Route for saving/updating an Article's associated Note
+  app.post("/articles/:id", function(req, res) {
+    // TODO
+    // ====
+    // save the new note that gets posted to the Notes collection
+    // then find an article from the req.params.id
+    // and update it's "note" property with the _id of the new note
+    db.Note.create(req.body)
+    .then(function(dataNote) {
+
+      return db.Article.findOneAndUpdate({_id: req.params.id}, { $push: { notes: dataNote._id } }, { new: true });
+    })
+    .then(function(data) {
+      res.json(data)
+    })
+    .catch(function(err) {
+      res.json(err)
+    })
+  });
 
   // Start the server
-  app.listen(PORT, function() {
+  app.listen(port, function() {
     console.log("App running on port " + PORT + "!");
   });
